@@ -33,6 +33,7 @@ dependencies:
   cloud_firestore:
   flutter_signin_button:
   shared_preferences:
+  google_sign_in:
 
 dev_dependencies:
   flutter_test:
