@@ -34,6 +34,7 @@ dependencies:
   flutter_signin_button:
   shared_preferences:
   google_sign_in:
+  http:
 
 dev_dependencies:
   flutter_test:

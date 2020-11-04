@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../util/network.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,11 +13,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User user;
+  Future data;
+  Network network;
 
   @override
   initState() {
     super.initState();
     getUser();
+    data = fetchData();
+  }
+
+  fetchData() async {
+    network = Network(url: "https://fakestoreapi.com/products/1");
+    return await network.fetchData();
   }
 
   getUser() {
@@ -37,8 +46,18 @@ class _HomePageState extends State<HomePage> {
           'Cart',
         ),
       ),
-      body: Center(
-        child: RaisedButton(child: Text("Sign Out"), onPressed: () {}),
+      body: FutureBuilder(
+        future: data,
+        builder: (context, AsyncSnapshot<dynamic> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            //print(data);
+            return Text("${snapshot.data['title']}");
+          }
+        },
       ),
       drawer: customDrawer(),
     );
