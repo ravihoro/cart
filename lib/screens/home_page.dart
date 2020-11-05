@@ -5,7 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../util/network.dart';
 import '../models/item.dart';
-//import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
+import '../models/my_model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -104,111 +105,113 @@ class _HomePageState extends State<HomePage> {
 
   Widget customCard(Item item) {
     //int id = itemList.items.indexOf(item);
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          //margin: const EdgeInsets.all(1.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            border: Border.all(color: Colors.deepPurpleAccent),
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.grey.withOpacity(0.2),
-            //     spreadRadius: 3.0,
-            //     blurRadius: 5.0,
-            //   ),
-            // ]
-          ),
-          //height: 350,
-          //width: 100,
-          //elevation: 10.0,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 5.0, top: 3.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        //itemList.items[id].isFavorite
-                        item.isFavorite
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        color: Colors.deepPurpleAccent,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          // print(itemList.items[id].isFavorite);
-                          // itemList.items[id].isFavorite =
-                          //     !itemList.items[id].isFavorite;
-                          // print(itemList.items[id].isFavorite);
-                          item.isFavorite = !item.isFavorite;
-                        });
-                      },
-                    ),
-                  ],
-                ),
+    return Consumer<MyModel>(
+      builder: (context, myModel, child) {
+        return Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: InkWell(
+            onTap: () {},
+            child: Container(
+              //margin: const EdgeInsets.all(1.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                border: Border.all(color: Colors.deepPurpleAccent),
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: Colors.grey.withOpacity(0.2),
+                //     spreadRadius: 3.0,
+                //     blurRadius: 5.0,
+                //   ),
+                // ]
               ),
-              Container(
-                height: 75,
-                width: 75,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.contain,
-                    image: NetworkImage(
-                      item.imageUrl,
+              //height: 350,
+              //width: 100,
+              //elevation: 10.0,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5.0, top: 3.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            //itemList.items[id].isFavorite
+                            myModel.favoritesId.contains(item.id)
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: Colors.deepPurpleAccent,
+                          ),
+                          onPressed: () {
+                            if (myModel.favoritesId.contains(item.id)) {
+                              myModel.removeFavorite(item);
+                            } else {
+                              myModel.addFavorite(item);
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ),
-              Text(
-                "${item.title}",
-                textAlign: TextAlign.center,
-                softWrap: true,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                '\$${item.price.toString()}',
-                style: TextStyle(
-                  color: Colors.deepPurple,
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Divider(
-                  color: Colors.deepPurpleAccent,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                child: InkWell(
-                  onTap: () {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(
-                        Icons.shopping_cart,
-                        color: Colors.amber,
+                  Container(
+                    height: 75,
+                    width: 75,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.contain,
+                        image: NetworkImage(
+                          item.imageUrl,
+                        ),
                       ),
-                      Text("Add to Cart",
-                          style: TextStyle(color: Colors.amber)),
-                    ],
+                    ),
                   ),
-                ),
+                  Text(
+                    "${item.title}",
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Text(
+                    '\$${item.price.toString()}',
+                    style: TextStyle(
+                      color: Colors.deepPurple,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Divider(
+                      color: Colors.deepPurpleAccent,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: InkWell(
+                      onTap: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(
+                            Icons.shopping_cart,
+                            color: Colors.amber,
+                          ),
+                          Text("Add to Cart",
+                              style: TextStyle(color: Colors.amber)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

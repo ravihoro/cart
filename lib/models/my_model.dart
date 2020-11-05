@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import 'item.dart';
 
 class MyModel extends ChangeNotifier {
-  ItemList _favorites;
-  ItemList _myCart;
+  List<Item> _favorites = List<Item>();
+  List<Item> _myCart = List<Item>();
 
-  ItemList get favorites => _favorites;
-  ItemList get myCart => _myCart;
+  List<Item> get favorites => _favorites;
+  List<Item> get myCart => _myCart;
+
+  List<int> _favoritesId = new List<int>();
+
+  List<int> get favoritesId => _favoritesId;
 
   void addFavorite(Item item) {
-    _favorites.items.remove(item);
+    _favorites.add(item);
+    _favoritesId.add(item.id);
     notifyListeners();
   }
 
   void removeFavorite(Item item) {
-    _favorites.items.remove(item);
+    _favorites.remove(item);
+    _favoritesId.remove(item.id);
     notifyListeners();
   }
 }
