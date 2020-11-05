@@ -1,3 +1,4 @@
+import 'package:cart/screens/favorites_page.dart';
 import 'package:cart/screens/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,19 @@ class _HomePageState extends State<HomePage> {
         title: Text(
           'Cart',
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.favorite),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => FavoritesPage()));
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: FutureBuilder(
         future: data,
@@ -52,8 +66,10 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.hasData) {
             itemList = ItemList.fromJson(snapshot.data);
             return GridView.builder(
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 2 / 2.5,
+              ),
               itemCount: itemList.items.length,
               itemBuilder: (context, index) {
                 return customCard(itemList.items[index]);
@@ -104,114 +120,94 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget customCard(Item item) {
-    //int id = itemList.items.indexOf(item);
     return Consumer<MyModel>(
       builder: (context, myModel, child) {
-        return Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: InkWell(
-            onTap: () {},
-            child: Container(
-              //margin: const EdgeInsets.all(1.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0),
-                border: Border.all(color: Colors.deepPurpleAccent),
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: Colors.grey.withOpacity(0.2),
-                //     spreadRadius: 3.0,
-                //     blurRadius: 5.0,
-                //   ),
-                // ]
-              ),
-              //height: 350,
-              //width: 100,
-              //elevation: 10.0,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 5.0, top: 3.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+        return InkWell(
+          onTap: () {},
+          child: Padding(
+            padding: const EdgeInsets.all(1.0),
+            child: Card(
+              elevation: 10.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 0.5),
+                  borderRadius: BorderRadius.circular(5.0),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        IconButton(
-                          icon: Icon(
-                            //itemList.items[id].isFavorite
-                            myModel.favoritesId.contains(item.id)
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: Colors.deepPurpleAccent,
+                        customSizedBox(30),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.contain,
+                                image: NetworkImage(
+                                  item.imageUrl,
+                                ),
+                              ),
+                            ),
                           ),
-                          onPressed: () {
-                            if (myModel.favoritesId.contains(item.id)) {
-                              myModel.removeFavorite(item);
-                            } else {
-                              myModel.addFavorite(item);
-                            }
-                          },
                         ),
+                        customSizedBox(5.0),
+                        Text(
+                          "${item.title}",
+                          textAlign: TextAlign.center,
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        customSizedBox(5.0),
+                        Text(
+                          '\$ ${item.price.toString()}',
+                          style: TextStyle(
+                            color: Colors.deepPurple,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        customSizedBox(5.0),
                       ],
                     ),
-                  ),
-                  Container(
-                    height: 75,
-                    width: 75,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.contain,
-                        image: NetworkImage(
-                          item.imageUrl,
+                    Positioned(
+                      right: 1.0,
+                      top: 1.0,
+                      child: IconButton(
+                        icon: Icon(
+                          myModel.favoritesId.contains(item.id)
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          color: Colors.deepPurpleAccent,
                         ),
+                        onPressed: () {
+                          if (myModel.favoritesId.contains(item.id)) {
+                            myModel.removeFavorite(item);
+                          } else {
+                            myModel.addFavorite(item);
+                          }
+                        },
                       ),
                     ),
-                  ),
-                  Text(
-                    "${item.title}",
-                    textAlign: TextAlign.center,
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    '\$${item.price.toString()}',
-                    style: TextStyle(
-                      color: Colors.deepPurple,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Divider(
-                      color: Colors.deepPurpleAccent,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                    child: InkWell(
-                      onTap: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            Icons.shopping_cart,
-                            color: Colors.amber,
-                          ),
-                          Text("Add to Cart",
-                              style: TextStyle(color: Colors.amber)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget customSizedBox(double height) {
+    return SizedBox(
+      height: height,
     );
   }
 }
