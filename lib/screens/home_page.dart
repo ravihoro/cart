@@ -1,3 +1,4 @@
+//import 'package:cart/screens/cart.dart';
 import 'package:cart/screens/favorites_page.dart';
 import 'package:cart/screens/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,7 @@ import '../util/network.dart';
 import '../models/item.dart';
 import 'package:provider/provider.dart';
 import '../models/my_model.dart';
+import '../util/widgets.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Cart',
+          'Items',
         ),
         actions: [
           IconButton(
@@ -52,10 +54,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => FavoritesPage()));
             },
           ),
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {},
-          ),
+          CustomCartIcon(),
         ],
       ),
       body: FutureBuilder(

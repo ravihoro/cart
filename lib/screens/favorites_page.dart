@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/my_model.dart';
 import 'package:provider/provider.dart';
 import '../models/item.dart';
+import '../util/widgets.dart';
 
 class FavoritesPage extends StatefulWidget {
   @override
@@ -16,6 +17,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
         title: Text(
           'My Favorites',
         ),
+        actions: [
+          CustomCartIcon(),
+        ],
       ),
       body: Consumer<MyModel>(
         builder: (context, myModel, child) {
@@ -87,20 +91,13 @@ class _FavoritesPageState extends State<FavoritesPage> {
               customSizedBox(5),
               FlatButton(
                 color: Colors.deepPurpleAccent,
-                onPressed: () {},
+                onPressed: () {
+                  myModel.addToCart(item);
+                  myModel.removeFavorite(item);
+                },
                 child:
                     Text('Move to Cart', style: TextStyle(color: Colors.white)),
               ),
-              // InkWell(
-              //   child: Text(
-              //     'Move to Cart',
-              //     style: TextStyle(
-              //       fontSize: 18.0,
-              //       color: Colors.deepPurpleAccent,
-              //     ),
-              //   ),
-              //   onTap: () {},
-              // ),
               customSizedBox(5),
             ],
           ),
