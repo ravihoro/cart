@@ -28,6 +28,11 @@ class MyModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void moveToFavorites(Item item) {
+    removeFromCart(item);
+    addFavorite(item);
+  }
+
   void removeFavorite(Item item) {
     _favorites.remove(item);
     _favoritesId.remove(item.id);
@@ -43,10 +48,10 @@ class MyModel extends ChangeNotifier {
 
   void decrementCount(Item item) {
     int count = _cartMap[item.id];
-    _itemsInCart--;
-    if (count - 1 == 0) {
+    if (count == 1) {
       removeFromCart(item);
     } else {
+      _itemsInCart--;
       _cartMap.update(item.id, (value) => count - 1);
       _totalPrice -= item.price;
       notifyListeners();
@@ -62,10 +67,11 @@ class MyModel extends ChangeNotifier {
   }
 
   void removeFromCart(Item item) {
+    int count = _cartMap[item.id];
     _cartMap.remove(item.id);
     _myCart.remove(item);
-    _totalPrice -= item.price;
-    _itemsInCart--;
+    _totalPrice = _totalPrice - (count * item.price);
+    _itemsInCart -= count;
     notifyListeners();
   }
 }

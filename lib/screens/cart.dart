@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/my_model.dart';
 import '../models/item.dart';
-import '../screens/favorites_page.dart';
+//import '../screens/favorites_page.dart';
 
 class Cart extends StatefulWidget {
   @override
@@ -20,15 +20,15 @@ class _CartState extends State<Cart> {
             title: Text(
               'Cart',
             ),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.favorite),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => FavoritesPage()));
-                },
-              ),
-            ],
+            // actions: [
+            //   IconButton(
+            //     icon: Icon(Icons.favorite),
+            //     onPressed: () {
+            //       Navigator.of(context).push(
+            //           MaterialPageRoute(builder: (context) => FavoritesPage()));
+            //     },
+            //   ),
+            // ],
           ),
           body: ListView.builder(
             itemCount: myModel.myCart.length,
@@ -206,7 +206,9 @@ class _CartState extends State<Cart> {
                       fontSize: 18.0,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    myModel.removeFromCart(item);
+                  },
                 ),
                 Container(
                   width: 1.0,
@@ -221,7 +223,9 @@ class _CartState extends State<Cart> {
                       fontSize: 18.0,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    myModel.moveToFavorites(item);
+                  },
                 ),
               ],
             ),
