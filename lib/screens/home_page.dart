@@ -10,6 +10,7 @@ import '../models/item.dart';
 import 'package:provider/provider.dart';
 import '../models/my_model.dart';
 import '../util/widgets.dart';
+import 'item_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -122,7 +123,10 @@ class _HomePageState extends State<HomePage> {
     return Consumer<MyModel>(
       builder: (context, myModel, child) {
         return InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ItemDetailPage(item: item)));
+          },
           child: Padding(
             padding: const EdgeInsets.all(1.0),
             child: Card(

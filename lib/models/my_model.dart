@@ -23,9 +23,11 @@ class MyModel extends ChangeNotifier {
   Map<int, int> get cartMap => _cartMap;
 
   void addFavorite(Item item) {
-    _favorites.add(item);
-    _favoritesId.add(item.id);
-    notifyListeners();
+    if (!favoritesId.contains(item.id)) {
+      _favorites.add(item);
+      _favoritesId.add(item.id);
+      notifyListeners();
+    }
   }
 
   void moveToFavorites(Item item) {
