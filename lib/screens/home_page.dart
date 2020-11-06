@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../models/my_model.dart';
 import '../util/widgets.dart';
 import 'item_detail_page.dart';
+import '../models/theme_model.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -39,6 +40,8 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isLoggedIn', false);
   }
+
+  bool val = false;
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +104,25 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           ListTile(
+            title: Text(
+              "Theme",
+              style: TextStyle(
+                color: Colors.deepPurpleAccent,
+              ),
+            ),
+            trailing: Consumer<ThemeModel>(
+              builder: (context, themeModel, child) {
+                return Switch(
+                  activeColor: Colors.deepPurpleAccent,
+                  value: themeModel.isDark,
+                  onChanged: (value) {
+                    themeModel.switchTheme();
+                  },
+                );
+              },
+            ),
+          ),
+          ListTile(
             //leading: Icon(Icons.exit_to_app),
             title: Text("Sign Out",
                 style: TextStyle(color: Colors.deepPurpleAccent)),
@@ -145,12 +167,15 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         customSizedBox(30),
                         Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.contain,
-                                image: NetworkImage(
-                                  item.imageUrl,
+                          child: Hero(
+                            tag: item.id,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.contain,
+                                  image: NetworkImage(
+                                    item.imageUrl,
+                                  ),
                                 ),
                               ),
                             ),

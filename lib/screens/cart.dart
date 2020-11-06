@@ -37,12 +37,12 @@ class _CartState extends State<Cart> {
             },
           ),
           bottomNavigationBar: BottomAppBar(
-            color: Colors.grey[100],
+            //color: Colors.grey[100],
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  "\$ ${myModel.totalPrice.toStringAsFixed(2)}",
+                  "Total:  \$${myModel.totalPrice.toStringAsFixed(2)}",
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.w400,

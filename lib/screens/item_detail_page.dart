@@ -44,16 +44,19 @@ class _ItemDetailPageState extends State<ItemDetailPage> {
               customSizedBox(5),
               Card(
                 elevation: 10.0,
-                child: Container(
-                  padding: const EdgeInsets.all(18.0),
-                  height: MediaQuery.of(context).size.height / 2.5,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    //color: Colors.red,
-                    image: DecorationImage(
-                      fit: BoxFit.contain,
-                      image: NetworkImage(
-                        widget.item.imageUrl,
+                child: Hero(
+                  tag: widget.item.id,
+                  child: Container(
+                    padding: const EdgeInsets.all(18.0),
+                    height: MediaQuery.of(context).size.height / 2.5,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      //color: Colors.red,
+                      image: DecorationImage(
+                        fit: BoxFit.contain,
+                        image: NetworkImage(
+                          widget.item.imageUrl,
+                        ),
                       ),
                     ),
                   ),
