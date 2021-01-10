@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   initState() {
     super.initState();
     user = _auth.currentUser;
+    //print(user.uid);
     data = fetchData();
   }
 
