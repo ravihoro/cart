@@ -2,6 +2,8 @@
 
 An online shopping application built using Flutter
 
+Link to apk: https://drive.google.com/file/d/1sz9vpTbRH8thvyFrWdhUzWTmkSmVvfV8/view
+
 ## Features
 - Google Sign In
 - View products
