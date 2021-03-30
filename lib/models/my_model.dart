@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'item.dart';
 
 class MyModel extends ChangeNotifier {
-  List<Item> _favorites = List<Item>();
-  List<Item> _myCart = List<Item>();
+  List<Item> _favorites = [];
+  List<Item> _myCart = [];
 
   List<Item> get favorites => _favorites;
   List<Item> get myCart => _myCart;
@@ -16,7 +16,7 @@ class MyModel extends ChangeNotifier {
 
   int get itemsInCart => _itemsInCart;
 
-  List<int> _favoritesId = new List<int>();
+  List<int> _favoritesId = [];
   Map<int, int> _cartMap = new Map<int, int>();
 
   List<int> get favoritesId => _favoritesId;

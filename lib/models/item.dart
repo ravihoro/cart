@@ -4,29 +4,30 @@ class ItemList {
   ItemList({this.items});
 
   factory ItemList.fromJson(List<dynamic> parsedJson) {
-    List<Item> items = new List<Item>();
+    List<Item> items = [];
     items = parsedJson.map((i) => Item.fromJson(i)).toList();
     return new ItemList(items: items);
   }
 }
 
 class Item {
-  int id;
-  String title;
-  double price;
-  String description;
-  String category;
-  String imageUrl;
-  bool isFavorite;
+  final int id;
+  final String title;
+  final double price;
+  final String description;
+  final String category;
+  final String imageUrl;
+  final bool isFavorite;
 
-  Item(
-      {this.id,
-      this.title,
-      this.price,
-      this.description,
-      this.category,
-      this.imageUrl,
-      this.isFavorite});
+  const Item({
+    this.id,
+    this.title,
+    this.price,
+    this.description,
+    this.category,
+    this.imageUrl,
+    this.isFavorite,
+  });
 
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
