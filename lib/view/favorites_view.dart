@@ -1,17 +1,10 @@
-import 'package:cart/screens/item_detail_page.dart';
-import 'package:cart/viewmodel/base_model.dart';
 import 'package:flutter/material.dart';
-import '../models/my_model.dart';
+import '../util/widgets.dart';
 import 'package:provider/provider.dart';
 import '../models/item.dart';
-import '../util/widgets.dart';
+import '../viewmodel/base_model.dart';
 
-class FavoritesPage extends StatefulWidget {
-  @override
-  _FavoritesPageState createState() => _FavoritesPageState();
-}
-
-class _FavoritesPageState extends State<FavoritesPage> {
+class FavoritesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +17,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
         ],
       ),
       body: Consumer<BaseModel>(
-        builder: (context, baseModel, child) {
+        builder: (context, myModel, child) {
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -32,9 +25,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
               crossAxisSpacing: 3.0,
               mainAxisSpacing: 3.0,
             ),
-            itemCount: baseModel.favoritesId.length,
+            itemCount: myModel.favoritesId.length,
             itemBuilder: (context, index) {
-              return customCard(baseModel.favorites[index], baseModel);
+              return customCard(myModel.favorites[index], myModel, context);
             },
           );
         },
@@ -42,13 +35,10 @@ class _FavoritesPageState extends State<FavoritesPage> {
     );
   }
 
-  Widget customCard(Item item, BaseModel myModel) {
+  Widget customCard(Item item, BaseModel myModel, BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ItemDetailPage(
-                  item: item,
-                )));
+        Navigator.pushNamed(context, '/item_detail', arguments: item);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -63,7 +53,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                customSizedBox(35),
+                SizedBox(height: 35),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
@@ -76,7 +66,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     ),
                   ),
                 ),
-                customSizedBox(5),
+                SizedBox(height: 5),
                 Text(
                   '${item.title}',
                   textAlign: TextAlign.center,
@@ -84,7 +74,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     fontSize: 18.0,
                   ),
                 ),
-                customSizedBox(5),
+                SizedBox(height: 5),
                 Text(
                   '\$ ${item.price}',
                   style: TextStyle(
@@ -92,12 +82,12 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                customSizedBox(5),
+                SizedBox(height: 5),
                 Divider(
                   height: 1.0,
                   thickness: 1.0,
                 ),
-                customSizedBox(5),
+                SizedBox(height: 5),
                 FlatButton(
                   color: Colors.deepPurpleAccent,
                   onPressed: () {
@@ -107,7 +97,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   child: Text('Move to Cart',
                       style: TextStyle(color: Colors.white)),
                 ),
-                customSizedBox(5),
+                SizedBox(height: 5),
               ],
             ),
             Positioned(
@@ -126,12 +116,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget customSizedBox(double height) {
-    return SizedBox(
-      height: height,
     );
   }
 }

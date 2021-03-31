@@ -1,15 +1,8 @@
+import 'package:cart/viewmodel/base_model.dart';
 import 'package:flutter/material.dart';
-import '../models/my_model.dart';
 import 'package:provider/provider.dart';
-import 'package:cart/screens/cart.dart';
 
-class CustomCartIcon extends StatefulWidget {
-  @override
-  _CustomCartIconState createState() => _CustomCartIconState();
-}
-
-class _CustomCartIconState extends State<CustomCartIcon> {
-  @override
+class CustomCartIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
@@ -21,22 +14,21 @@ class _CustomCartIconState extends State<CustomCartIcon> {
             child: Icon(Icons.shopping_cart),
           ),
           onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Cart()));
+            Navigator.pushNamed(context, '/cart_view');
           },
         ),
         Positioned(
           right: 8,
           top: 7,
-          child: Consumer<MyModel>(
-            builder: (context, myModel, child) {
-              return myModel.itemsInCart == 0
+          child: Consumer<BaseModel>(
+            builder: (context, baseModel, child) {
+              return baseModel.itemsInCart == 0
                   ? Container()
                   : Container(
                       alignment: Alignment.center,
                       height: 20,
                       width: 20,
-                      child: Text("${myModel.itemsInCart}"),
+                      child: Text("${baseModel.itemsInCart}"),
                       decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(10),
