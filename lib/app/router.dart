@@ -1,6 +1,7 @@
 import 'package:cart/view/cart_view.dart';
 import 'package:cart/view/home_view.dart';
 import 'package:cart/view/item_detail_view.dart';
+import 'package:cart/view/login_view.dart';
 import 'package:flutter/material.dart';
 import '../models/item.dart';
 import '../view/favorites_view.dart';
@@ -8,9 +9,14 @@ import '../view/favorites_view.dart';
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case '/home_view':
+      case '/':
         return MaterialPageRoute(
           builder: (_) => HomeView(),
+        );
+        break;
+      case '/login_view':
+        return MaterialPageRoute(
+          builder: (_) => LoginView(),
         );
         break;
       case '/item_detail':

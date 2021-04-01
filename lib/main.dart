@@ -3,6 +3,8 @@ import 'package:cart/screens/login_page.dart';
 import 'package:cart/view/home_view.dart';
 import 'package:cart/view/theme_switch.dart';
 import 'package:cart/viewmodel/home_viewmodel.dart';
+import 'package:cart/viewmodel/login_status_viewmodel.dart';
+import 'package:cart/viewmodel/login_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
@@ -18,13 +20,18 @@ import './viewmodel/base_model.dart';
 void main() async {
   setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
-  //await Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(
     MyApp(),
   );
 }
 
 class MyApp extends StatelessWidget {
+  Future<bool> isLoggedIn() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    return _prefs.getBool("isLoggedIn") ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -49,7 +56,7 @@ class MyApp extends StatelessWidget {
             ),
             title: 'Cart',
             debugShowCheckedModeBanner: false,
-            initialRoute: '/home_view',
+            initialRoute: '/login_view',
             onGenerateRoute: router.Router.generateRoute,
           );
         },

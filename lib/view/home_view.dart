@@ -1,4 +1,5 @@
 import 'package:cart/view/theme_switch.dart';
+import 'package:cart/viewmodel/login_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../viewmodel/home_viewmodel.dart';
@@ -36,6 +37,24 @@ class HomeView extends StatelessWidget {
                 'Theme',
               ),
               trailing: ThemeSwitch(),
+            ),
+            ViewModelBuilder<LoginViewModel>.nonReactive(
+              builder: (context, model, child) {
+                return ListTile(
+                  title: Text(
+                    'Sign Out',
+                  ),
+                  onTap: () async {
+                    bool val = await model.logout();
+                    if (val) {
+                      Navigator.pushReplacementNamed(context, '/login_view');
+                    } else {
+                      print("Logout failed");
+                    }
+                  },
+                );
+              },
+              viewModelBuilder: () => LoginViewModel(),
             ),
           ],
         ),
