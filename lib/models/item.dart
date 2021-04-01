@@ -1,15 +1,3 @@
-class ItemList {
-  final List<Item> items;
-
-  ItemList({this.items});
-
-  factory ItemList.fromJson(List<dynamic> parsedJson) {
-    List<Item> items = [];
-    items = parsedJson.map((i) => Item.fromJson(i)).toList();
-    return new ItemList(items: items);
-  }
-}
-
 class Item {
   final int id;
   final String title;

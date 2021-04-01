@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:firebase_core/firebase_core.dart';
 import './viewmodel/theme_model.dart';
@@ -17,10 +17,10 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  Future<bool> isLoggedIn() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    return _prefs.getBool("isLoggedIn") ?? false;
-  }
+  // Future<bool> isLoggedIn() async {
+  //   SharedPreferences _prefs = await SharedPreferences.getInstance();
+  //   return _prefs.getBool("isLoggedIn") ?? false;
+  // }
 
   @override
   Widget build(BuildContext context) {

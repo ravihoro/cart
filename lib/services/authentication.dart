@@ -7,7 +7,8 @@ class Authentication {
   get user => _auth.currentUser;
 
   signOut() async {
-    await GoogleSignIn().signOut();
+    await _auth.signOut();
+    //await GoogleSignIn().signOut();
   }
 
   Future<UserCredential> signInWithGoogle() async {
@@ -24,6 +25,6 @@ class Authentication {
     );
 
     //Once signed in, return the credential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return await _auth.signInWithCredential(credential);
   }
 }

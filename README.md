@@ -9,7 +9,7 @@ Link to apk: https://drive.google.com/file/d/1sz9vpTbRH8thvyFrWdhUzWTmkSmVvfV8/v
 - View products
 - Add products to favorites/cart
 - Dark/Light Theme
-- Provider package for state management
+- Follows MVVM architecture implemented using Stacked package
 
 ## Tools Used
 - Flutter
