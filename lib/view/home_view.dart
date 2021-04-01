@@ -81,61 +81,6 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
-  // Widget build(BuildContext context) {
-  //   BaseModel baseModel = Provider.of<BaseModel>(context);
-
-  //   return ViewModelBuilder<HomeViewModel>.reactive(
-  //     onModelReady: (model) => model.loadData(),
-  //     viewModelBuilder: () => HomeViewModel(),
-  //     builder: (context, model, child) {
-  //       return Scaffold(
-  //         drawer: Drawer(
-  //           child: Column(
-  //             children: [
-  //               SizedBox(
-  //                 height: 100,
-  //               ),
-  //               ListTile(
-  //                 title: Text(
-  //                   'Theme',
-  //                 ),
-  //                 trailing: ThemeSwitch(),
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //         appBar: AppBar(
-  //           title: Text(
-  //             'Items',
-  //           ),
-  //           actions: [
-  //             IconButton(
-  //               icon: Icon(Icons.favorite),
-  //               onPressed: () {
-  //                 Navigator.pushNamed(context, '/favorites_view');
-  //               },
-  //             ),
-  //             CustomCartIcon(),
-  //           ],
-  //         ),
-  //         body: model.state == ViewState.Loading
-  //             ? Center(
-  //                 child: CircularProgressIndicator(),
-  //               )
-  //             : GridView.builder(
-  //                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //                   crossAxisCount: 2,
-  //                   childAspectRatio: 2 / 2.5,
-  //                 ),
-  //                 itemCount: model.items.length,
-  //                 itemBuilder: (context, index) {
-  //                   return customCard(model.items[index], context, baseModel);
-  //                 },
-  //               ),
-  //       );
-  //     },
-  //   );
-  //}
 
   Widget customCard(Item item, BuildContext context, BaseModel baseModel) {
     return InkWell(

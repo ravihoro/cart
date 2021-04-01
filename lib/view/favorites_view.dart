@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 import '../util/widgets.dart';
-import 'package:provider/provider.dart';
 import '../models/item.dart';
 import '../viewmodel/base_model.dart';
 
@@ -16,23 +16,32 @@ class FavoritesView extends StatelessWidget {
           CustomCartIcon(),
         ],
       ),
-      body: Consumer<BaseModel>(
-        builder: (context, myModel, child) {
-          return GridView.builder(
+      body: FavoritesGrid(),
+    );
+  }
+}
+
+class FavoritesGrid extends ViewModelWidget<BaseModel> {
+  @override
+  Widget build(BuildContext context, BaseModel model) {
+    return model.favoritesId.length == 0
+        ? Center(
+            child: Text(
+              'No favorites.',
+            ),
+          )
+        : GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 2 / 3,
               crossAxisSpacing: 3.0,
               mainAxisSpacing: 3.0,
             ),
-            itemCount: myModel.favoritesId.length,
+            itemCount: model.favoritesId.length,
             itemBuilder: (context, index) {
-              return customCard(myModel.favorites[index], myModel, context);
+              return customCard(model.favorites[index], model, context);
             },
           );
-        },
-      ),
-    );
   }
 
   Widget customCard(Item item, BaseModel myModel, BuildContext context) {

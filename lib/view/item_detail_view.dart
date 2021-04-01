@@ -94,10 +94,7 @@ class ItemDetailView extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          //myModel.addToCart(widget.item);
-                          //myModel.removeFromCart(widget.item);
-                          // Navigator.of(context).push(
-                          //     MaterialPageRoute(builder: (context) => Cart()));
+                          Navigator.pushNamed(context, '/cart_view');
                         },
                       )
                     : RaisedButton(

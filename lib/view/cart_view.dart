@@ -1,54 +1,56 @@
 import 'package:cart/viewmodel/base_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../models/item.dart';
+import 'package:stacked/stacked.dart';
 
-class CartView extends StatelessWidget {
+class CartView extends ViewModelWidget<BaseModel> {
   @override
-  Widget build(BuildContext context) {
-    return Consumer<BaseModel>(
-      builder: (context, model, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              'Cart',
+  Widget build(BuildContext context, BaseModel model) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Cart',
+        ),
+      ),
+      body: model.myCart.length == 0
+          ? Center(
+              child: Text(
+                'No items in cart.',
+              ),
+            )
+          : ListView.builder(
+              itemCount: model.myCart.length,
+              itemBuilder: (context, index) {
+                return customListTile(model.myCart[index], model, context);
+              },
             ),
-          ),
-          body: ListView.builder(
-            itemCount: model.myCart.length,
-            itemBuilder: (context, index) {
-              return customListTile(model.myCart[index], model, context);
-            },
-          ),
-          bottomNavigationBar: BottomAppBar(
-            //color: Colors.grey[100],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  "Total:  \$${model.totalPrice.toStringAsFixed(2)}",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                FlatButton(
-                  onPressed: model.totalPrice == 0.0 ? () {} : () {},
-                  color: model.totalPrice == 0.0
-                      ? Colors.grey
-                      : Colors.deepPurpleAccent,
-                  child: Text(
-                    "Place Order",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
+      bottomNavigationBar: BottomAppBar(
+        //color: Colors.grey[100],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              "Total:  \$${model.totalPrice.toStringAsFixed(2)}",
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w400,
+              ),
             ),
-          ),
-        );
-      },
+            FlatButton(
+              onPressed: model.totalPrice == 0.0 ? null : () {},
+              color: model.totalPrice == 0.0
+                  ? Colors.grey
+                  : Colors.deepPurpleAccent,
+              child: Text(
+                "Place Order",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
