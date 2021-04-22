@@ -107,6 +107,9 @@ class ItemDetailView extends StatelessWidget {
                         ),
                         onPressed: () {
                           model.addToCart(item);
+                          if (model.favorites.contains(item)) {
+                            model.removeFavorite(item);
+                          }
                         },
                       ),
               ],
